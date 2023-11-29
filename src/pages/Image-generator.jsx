@@ -27,8 +27,11 @@ export default function ImageGenerator() {
 
     setActive(true);
     
-    try {
+    // Try getting response from openai
+     try {
+      // assign openai as defual value
       const openai = new OpenAI({
+        // importing and decrypting apikay for readability
         apiKey: OPENAI_API_KEY,
         dangerouslyAllowBrowser: true,
       });
@@ -39,13 +42,20 @@ export default function ImageGenerator() {
         size: "1024x1024",
       });
 
+      // Set description field to empty
       setDescription("");
+
+      // Get first value image url generated
       const image = response.data[0].url;
       console.log(response)
+
+      // append the image
       setImage([
         { url: image, content: description },
         ...images,
       ]);
+
+      // else return error
     } catch (error) {
       console.error(error);
     }
@@ -53,6 +63,7 @@ export default function ImageGenerator() {
     setActive(false);
   };
 
+  // Return View
   return (
     <main className="grid lg:flex min-h-screen flex-col items-center lg:justify-between py-3 lg:py-9 px-3 lg:px-20">
       <div className="mb-16 z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -75,6 +86,7 @@ export default function ImageGenerator() {
         </div>
       </div>
 
+      {/* Form field */}
       <form
         className="mb-9 z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex"
         onSubmit={handleSubmit}
@@ -88,6 +100,8 @@ export default function ImageGenerator() {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Image description"
           />
+
+          {/* Submit button, with active set (false : true) */}
           <button
             disabled={active}
             className="border-gray-300 text-white bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:dark:bg-zinc-800/30 p-3 rounded-md"
@@ -104,6 +118,7 @@ export default function ImageGenerator() {
       <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]"></div>
 
       <div className="mb-32 grid gap-5 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+        {/* Looping through list of images */}
         {images.map((img, index) => (
           <div key={index} className="grid gap-3">
             <div className="flex justify-center items-center bg-slate-50 h-56 w-full rounded-lg shadow-lg">

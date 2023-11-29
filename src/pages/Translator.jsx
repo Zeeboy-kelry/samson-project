@@ -8,6 +8,7 @@ import { CiUser } from "react-icons/ci";
 import { Link } from "react-router-dom";
 
 export default function Translator() {
+  // Import environment variable from .env
   const API_KEY = import.meta.env;
 
   const OPENAI_API_KEY = API_KEY.VITE_REACT_APP_OPENAI;
@@ -29,6 +30,7 @@ export default function Translator() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // If input field is empty, respond Input field cannot be empty
     if (question.trim() === "") {
       setMessages([
         ...messages,
@@ -41,22 +43,33 @@ export default function Translator() {
       return;
     }
 
+    // If input field is not empty, append to message new content
     setActive(true);
     setMessages([
       ...messages,
       { from, to, role: "user", content: question, text: "Loading..." },
     ]);
 
+    // Try getting response from openai
     try {
+      // assign openai as defual value
       const openai = new OpenAI({
+        // importing and decrypting apikay for readability
         apiKey: OPENAI_API_KEY,
         dangerouslyAllowBrowser: true,
       });
+
+      // Send request using the chat completion model from openai
       const response = await openai.chat.completions.create({
         model: "gpt-4",
+
+        // Set massage and function
         messages: [
           {
+            // Define role
             role: "system",
+
+            // Define funtionality dynamically
             content:
               "You will be provided with a sentence in " +
               from +
@@ -114,6 +127,8 @@ export default function Translator() {
       <div className="grid gap-3 z-10 border-gray-300 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:rounded-xl lg:border lg:bg-gray-200 lg:dark:bg-zinc-800/30 outline-none border rounded-md max-w-5xl w-full p-3">
         <div className="flex w-full items-center justify-center font-mono text-sm">
           <div className="flex justify-between gap-1 w-full">
+              
+            {/* Laguage to translate from */}
             <div className="border-gray-300 text-white bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:dark:bg-zinc-800/30 p-2 rounded-md">
               <label>From:</label>
               <select
@@ -128,9 +143,11 @@ export default function Translator() {
                 <option value="French">French</option>
                 <option value="Yoruba">Yoruba</option>
                 <option value="Hausa">Hausa</option>
+                <option value="Arabic">Arabic</option>
               </select>
             </div>
 
+            {/* Language to translate to */}
             <div className="border-gray-300 text-white bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:dark:bg-zinc-800/30 p-2 rounded-md">
               <label>To:</label>
               <select
@@ -144,6 +161,7 @@ export default function Translator() {
                 <option value="French">French</option>
                 <option value="Yoruba">Yoruba</option>
                 <option value="Hausa">Hausa</option>
+                <option value="Arabic">Arabic</option>
               </select>
             </div>
           </div>
@@ -179,11 +197,15 @@ export default function Translator() {
             </div>
           ))}
         </div>
+
+        {/* Delete translate, Form input and submit form */}
         <form
           className="flex w-full items-center justify-center font-mono text-sm"
           onSubmit={handleSubmit}
         >
           <div className="flex justify-between gap-1 w-full">
+
+            {/* Delete button */}
             <span
               className="border-gray-300 text-red-500 cursor-pointer bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:dark:bg-zinc-800/30 p-3 rounded-md"
               onClick={() => {
@@ -192,6 +214,8 @@ export default function Translator() {
             >
               <BiTrash className="w-5 h-5" />
             </span>
+
+            {/* Input field */}
             <input
               autoComplete="off"
               id="question"
@@ -199,6 +223,8 @@ export default function Translator() {
               onChange={(e) => setQuestion(e.target.value)}
               className="border-gray-300 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:rounded-xl lg:border lg:bg-gray-200 lg:dark:bg-zinc-800/30 h-12 w-full p-3 outline-none border rounded-md"
             />
+
+            {/* Submit button, with active set (false : true) */}
             <button
               disabled={active}
               className="border-gray-300 text-white bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:dark:bg-zinc-800/30 p-3 rounded-md"
