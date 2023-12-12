@@ -52,7 +52,7 @@ export default function Translator() {
 
     // Try getting response from openai
     try {
-      // assign openai as defual value
+      // assign openai as defualt value
       const openai = new OpenAI({
         // importing and decrypting apikay for readability
         apiKey: OPENAI_API_KEY,

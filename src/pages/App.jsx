@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import Image from "../assets/react.svg";
-import Image2 from "../assets/language.jpg";
+import Image from "../assets/AI.png";
+import Image2 from "../assets/language.png";
+import Image3 from "../assets/image.jpg"
 
 export default function Home() {
   return (
@@ -34,7 +35,7 @@ export default function Home() {
           <div className="flex justify-center items-center bg-slate-50 h-56 w-full rounded-lg shadow-lg">
             <img
               className=""
-              src={Image2}
+              src={Image3}
               alt="Logo"
               width={180}
               height={37}
@@ -50,7 +51,7 @@ export default function Home() {
           <div className="flex justify-center items-center bg-slate-50 h-56 w-full rounded-lg shadow-lg">
             <img
               className=""
-              src={Image}
+              src={Image2}
               alt="Logo"
               width={180}
               height={37}
@@ -61,6 +62,7 @@ export default function Home() {
           </Link>
         </div>
 
+        {/* AI image */}
         <div className="grid gap-3">
           <div className="flex justify-center items-center bg-slate-50 h-56 w-full rounded-lg shadow-lg">
             <img

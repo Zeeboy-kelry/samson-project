@@ -1,10 +1,13 @@
+// To display single HTML file
 import { useState } from "react";
+// To create a model for functionalies
 import OpenAI from "openai";
 import { SiOpenai } from "react-icons/si";
 import { AiOutlineSend } from "react-icons/ai";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { BiTrash } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
+// Rendering json file into HTML document into the root ID
 import { Link } from "react-router-dom";
 
 export default function ChatGPT() {
@@ -37,12 +40,14 @@ export default function ChatGPT() {
       return;
     }
 
+    // User field
     setActive(true);
     setMessages([
       ...messages,
       { role: "user", content: question, text: "Loading..." },
     ]);
 
+    // Allow browser to read the API key
     try {
       const openai = new OpenAI({
         apiKey: OPENAI_API_KEY,
@@ -53,6 +58,7 @@ export default function ChatGPT() {
         messages: [{ role: "user", content: question }],
       });
 
+      // User massage field
       setQuestion("");
       console.log(response)
       const responseData = response.choices[0].message.content;
